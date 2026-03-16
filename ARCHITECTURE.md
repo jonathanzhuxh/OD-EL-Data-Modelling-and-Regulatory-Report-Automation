@@ -67,6 +67,8 @@ The distinction matters. Manual entry is not the same as unstructured entry. EL 
 
 The workflow design is the core of this project. The automation came later. The design came first.
 
+![ODEL Data Flow](assets/odel.png)
+
 ### The daily cycle
 
 OD generates activity every working day. The daily workflow runs on the same schedule:
