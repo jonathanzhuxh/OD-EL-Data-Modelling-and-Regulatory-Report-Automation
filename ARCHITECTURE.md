@@ -59,9 +59,9 @@ Every regulatory report is a different view of this structure. The model does no
 
 **OD source data** is downloaded daily as a structured file from the bank's internal systems. The format is consistent enough to be processed programmatically by the Alteryx daily workflow, which reads the file and writes the results into the data model.
 
-**EL system data** comes from the bank's EL system. EL transactions are infrequent, so EL data does not need the daily standardization workflow; it is loaded directly into the relevant layers of the model as EL transactions occur, and consumed automatically by all downstream processes.
+**EL source data** comes from the bank's EL system, but there is no automated feed, so it is entered manually. EL volume is much lower than OD, so instead of going through the daily standardization workflow, EL data is entered directly into the relevant layers of the model as EL transactions occur, and consumed automatically by all downstream processes.
 
-The distinction matters. OD and EL arrive differently, but once in the five-layer model, EL data is as usable as OD data — the only difference is how it arrives.
+The distinction matters. Manual entry is not the same as unstructured entry. EL data entered directly into the five-layer model is as usable as OD data processed through the daily workflow — the only difference is how it arrives.
 
 ---
 
@@ -74,7 +74,7 @@ The workflow design is the core of this project. The automation came later. The 
 *Reading the diagram:*
 
 - **OD Raw Data** is the daily OD source file. It goes through the **Standardized Data Process**, which is the Alteryx daily workflow: cleaning, validation against the model, and writing to the relevant layers.
-- **EL System Data** is the EL source from the bank's EL system. It is loaded directly into the model layers, without going through the standardized process.
+- **EL System Data** is EL data from the bank's EL system. It is low-volume, so it is entered manually and directly into the model layers, without going through the standardized process.
 - The **Join Table** joins the five layers (customer → contract → note → movement / guarantee) into one reporting view. Every report output is derived from that view.
 
 ### The daily cycle
@@ -95,7 +95,7 @@ The daily workflow does not add work. It redistributes it — away from the dead
 
 When the monthly trigger fires, it reads from the accumulated daily data in the model. At that point, the data has already been validated across every working day in the period. The trigger generates the submission file and working paper, and exits. There is no error-handling logic for data quality problems because by the time the trigger runs, those problems have already been resolved.
 
-This is why the monthly close time dropped from six days to thirty minutes. Not because the monthly automation is fast. Because the daily workflow had already done the work.
+This is why the month-end close time dropped from six days to thirty minutes, in exchange for about five minutes of processing each working day. Not because the monthly automation is fast. Because the daily workflow had already done the work.
 
 ---
 
@@ -113,20 +113,25 @@ The automation is organised into three layers:
 
 **Monthly / quarterly trigger** — Reads from the accumulated model, applies the relevant regulatory calculation logic for each report type, and generates the submission file and working paper. Runs at the start of each reporting cycle.
 
-EL system data is loaded directly into the model rather than through the daily OD workflow. All downstream automation — validation, monthly trigger, report generation — treats EL data identically to OD data once it is in the model.
+EL data is low-volume and entered manually into the model rather than through the daily OD workflow. All downstream automation — validation, monthly trigger, report generation — treats EL data identically to OD data once it is in the model.
 
 ---
 
 ## 5. Outcomes
 
+**Scope:** OD and EL reporting to two regulators (NFRA and PBOC), built on a single five-layer data model.
+
 | Metric | Result |
 |---|---|
-| Monthly close time | 30 minutes (from 6 days) |
-| Report types automated | 5 across NFRA and PBOC (PBOC daily / monthly / quarterly; NFRA monthly / quarterly) |
-| Data model layers | 5 unified layers |
-| Regulators served | NFRA and PBOC |
-| IT resources required | 0 |
-| Month-end data surprises | 0 |
+| Month-end close time | 30 minutes (from 6 days)[^1] |
+| Daily processing cost | ~5 minutes per working day[^1] |
+| Report types automated | 5 (PBOC daily / monthly / quarterly; NFRA monthly / quarterly) |
+| IT resources required | 0[^2] |
+| Month-end data surprises | 0 over 13 months[^3] |
+
+[^1]: Month-end close = time from the monthly trigger to the finished submission file and working paper. Before, this took six days of manual work; the cleaning moved into the daily workflow, at a cost of about five extra minutes per working day.
+[^2]: No IT development or setup. I set up Alteryx and built all workflows myself.
+[^3]: A month-end surprise is a data issue first discovered during the month-end close. Measured over 13 months during my tenure.
 
 Beyond the numbers, two things stand out.
 
@@ -150,9 +155,9 @@ The data volumes didn't require a database. OD and EL are not high-frequency pro
 
 The goal was not the most technically capable solution. It was the most maintainable one for the people who had to live with it.
 
-**Why does EL data bypass the daily standardization workflow?**
+**Why does EL data skip the daily standardization workflow?**
 
-EL transactions are infrequent and long-duration; a daily cleaning workflow would add maintenance without adding value. Loading EL system data directly into the correct model structure makes it just as usable as the daily-processed OD data. The distinction between how data arrives and how data is structured is important to keep clear.
+The volume is small. EL transactions are infrequent, so a daily standardization workflow would add maintenance without adding value. Automating the upstream EL feed would also have required IT involvement that wasn't available — the tech department was effectively paralysed by COVID at the time. Entering EL data manually, directly into the correct model structure, makes it just as usable as the daily-processed OD data. The distinction between how data arrives and how data is structured is important to keep clear.
 
 **Why daily processing rather than weekly?**
 
