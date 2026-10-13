@@ -2,6 +2,14 @@
 
 End-to-end data modelling and automation for overdraft and entrusted loan regulatory reporting
 
+> *Disclaimer: This repository contains no proprietary code or data. The institution is anonymised, and all diagrams are redrawn.*
+
+---
+
+## My Role
+
+**Built in 2021.** I owned this project end to end, from diagnosis to delivery, entirely on my own. I diagnosed the problems in the inherited process, which had no documentation, and mapped the OD/EL data. I designed the five-layer data model, the daily and monthly/quarterly workflows and the validation rules, and built the Alteryx automation and the report outputs. I also wrote the documentation and handed the system over. No IT resources were involved.
+
 ---
 
 ## The Problem
@@ -22,7 +30,7 @@ Before touching any tooling, I spent the first weeks mapping the data: what it r
 
 The mapping exercise produced two things: a five-layer data model — corporate customer, loan contract, loan note, loan movement, guarantee contract — and a workflow design that moved data cleaning from month-end to every working day.
 
-OD activity happens daily. The redesigned workflow processed it daily: download the source file, run the Alteryx automation, validate against the data model, sync. By the time the monthly trigger fired, the data had already been cleaned incrementally across thirty working days. The monthly close went from six days to thirty minutes — not because the automation was clever, but because the work was already done.
+OD activity happens daily. The redesigned workflow processed it daily: download the source file, run the Alteryx automation, validate against the data model, sync. By the time the monthly trigger fired, the data had already been cleaned incrementally across thirty working days. The month-end close went from six days to thirty minutes, at a cost of about five minutes of daily processing — not because the automation was clever, but because the work was already done.
 
 **Built with:** `Alteryx` `Excel`
 
@@ -46,14 +54,19 @@ This is not a tooling insight. It is a workflow design insight. The automation c
 
 ## Outcomes
 
+**Scope:** OD and EL reporting to two regulators (NFRA and PBOC), built on a single five-layer data model.
+
 | Metric | Result |
 |---|---|
-| Monthly close time | 30 minutes (from 6 days) |
-| Report types automated | 6+ across NFRA and PBOC |
-| Data model layers | 5 unified layers |
-| Regulators served | NFRA and PBOC |
-| IT resources required | 0 |
-| Month-end data surprises | 0 |
+| Month-end close time | 30 minutes (from 6 days)[^1] |
+| Daily processing cost | ~5 minutes per working day[^1] |
+| Report types automated | 5 (PBOC daily / monthly / quarterly; NFRA monthly / quarterly) |
+| IT resources required | 0[^2] |
+| Month-end data surprises | 0 over 13 months[^3] |
+
+[^1]: Month-end close = time from the monthly trigger to the finished submission file and working paper. Before, this took six days of manual work; the cleaning moved into the daily workflow, at a cost of about five extra minutes per working day.
+[^2]: No IT development or setup. I set up Alteryx and built all workflows myself.
+[^3]: A month-end surprise is a data issue first discovered during the month-end close. Measured over 13 months during my tenure.
 
 The checker's workload changed character as well as volume. Instead of hunting for errors in a six-day output, they were reviewing a working paper generated from a model that had already been validated incrementally. The review became confirmation rather than discovery.
 
@@ -61,7 +74,7 @@ The checker's workload changed character as well as volume. Instead of hunting f
 
 ## What This Project Revealed
 
-The handover on departure exposed a gap that the automation hadn't addressed. Colleagues who inherited the system could run it fluently. When something broke or needed adapting, they couldn't. The system had been built to outlast its creator. It hadn't been built to be understood by the people who followed.
+The handover on departure exposed a gap that the automation hadn't addressed. Colleagues who inherited the system could run it fluently. When something broke or needed adapting, they couldn't. I had built the system to outlast me. It hadn't been built to be understood by the people who followed.
 
 That gap — between a system that runs and a team that can evolve it — became the question that shaped every project that followed. It is the origin of a broader framework for sustainable digitalisation, developed and applied at scale in the project that came next.
 
