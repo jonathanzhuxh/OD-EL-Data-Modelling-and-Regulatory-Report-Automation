@@ -46,7 +46,7 @@ The system worked. The daily workflow ran. The monthly close took thirty minutes
 
 When I left, I handed it over.
 
-What the handover exposed was a gap I hadn't designed for. Colleagues who inherited the system could run it. They understood the daily steps. They knew how to trigger the monthly automation. What they couldn't do was change it. When an upstream data format changed, when a reporting dimension was added, when something broke in a way that wasn't obvious — they were stuck. The system that had been built to outlast its creator hadn't been built to be understood by the people who followed.
+What the handover exposed was a gap I hadn't designed for. Colleagues who inherited the system could run it. They understood the daily steps. They knew how to trigger the monthly automation. What they couldn't do was change it. When an upstream data format changed, when a reporting dimension was added, when something broke in a way that wasn't obvious — they were stuck. I had built the system to outlast me, but I hadn't built it to be understood by the people who followed.
 
 This wasn't their failure. It was a design failure. I had built a system that was operationally robust but intellectually opaque — not through any deliberate choice, but because I had focused on making it work and hadn't thought enough about making it legible.
 
@@ -66,7 +66,7 @@ That gap — between a system that runs and a team that can evolve it — became
 
 The next project was built from the start with that constraint in mind: not just a robust architecture, but a visible one; not just trained operators, but colleagues who understood enough to push back when requirements didn't make sense; not just documentation for record-keeping, but documentation for handover.
 
-The result was a system that outlived its creator, then outlived its platform, and left behind a methodology that spread to other teams without being mandated.
+The result was a system that outlived my time there, then outlived its platform, and left behind a methodology that spread to other teams without being mandated.
 
 That is the project this one was the prequel to.
 

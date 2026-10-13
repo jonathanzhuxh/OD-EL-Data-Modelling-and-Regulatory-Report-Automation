@@ -2,6 +2,15 @@
 
 End-to-end data modelling and automation for overdraft and entrusted loan regulatory reporting
 
+> *Disclaimer: This repository contains no proprietary code or data. The institution is anonymised, and all diagrams are redrawn.*
+
+---
+
+## My Role
+
+<!-- TODO: 时间/职位/机构类型 -->
+I did this project entirely on my own. I diagnosed the problems in the inherited process, which had no documentation, and mapped the OD/EL data. I designed the five-layer data model, the daily and monthly/quarterly workflows and the validation rules, and built the Alteryx automation and the report outputs. I also wrote the documentation and handed the system over. No IT resources were involved.
+
 ---
 
 ## The Problem
@@ -49,7 +58,7 @@ This is not a tooling insight. It is a workflow design insight. The automation c
 | Metric | Result |
 |---|---|
 | Monthly close time | 30 minutes (from 6 days) |
-| Report types automated | 6+ across NFRA and PBOC |
+| Report types automated | 5 across NFRA and PBOC (PBOC daily / monthly / quarterly; NFRA monthly / quarterly) |
 | Data model layers | 5 unified layers |
 | Regulators served | NFRA and PBOC |
 | IT resources required | 0 |
@@ -61,7 +70,7 @@ The checker's workload changed character as well as volume. Instead of hunting f
 
 ## What This Project Revealed
 
-The handover on departure exposed a gap that the automation hadn't addressed. Colleagues who inherited the system could run it fluently. When something broke or needed adapting, they couldn't. The system had been built to outlast its creator. It hadn't been built to be understood by the people who followed.
+The handover on departure exposed a gap that the automation hadn't addressed. Colleagues who inherited the system could run it fluently. When something broke or needed adapting, they couldn't. I had built the system to outlast me. It hadn't been built to be understood by the people who followed.
 
 That gap — between a system that runs and a team that can evolve it — became the question that shaped every project that followed. It is the origin of a broader framework for sustainable digitalisation, developed and applied at scale in the project that came next.
 

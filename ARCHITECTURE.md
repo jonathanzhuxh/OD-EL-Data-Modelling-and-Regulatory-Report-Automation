@@ -4,6 +4,8 @@ This document covers the data model and workflow architecture for OD/EL regulato
 
 This is not a record of what was built. It is a record of why it was built this way.
 
+> *Disclaimer: This repository contains no proprietary code or data. The institution is anonymised, and all diagrams are redrawn.*
+
 ---
 
 ## Contents
@@ -69,6 +71,12 @@ The workflow design is the core of this project. The automation came later. The 
 
 ![ODEL Data Flow](assets/odel.png)
 
+*Reading the diagram:*
+
+- **OD Raw Data** is the daily OD source file. It goes through the **Standardized Data Process**, which is the Alteryx daily workflow: cleaning, validation against the model, and writing to the relevant layers.
+- **EL System Data** is EL records taken from the upstream system. That system has no machine-readable export, so the records are entered manually and directly into the model layers, without going through the standardized process.
+- The **Join Table** joins the five layers (customer → contract → note → movement / guarantee) into one reporting view. Every report output is derived from that view.
+
 ### The daily cycle
 
 OD generates activity every working day. The daily workflow runs on the same schedule:
@@ -114,7 +122,7 @@ The EL layer has no automated workflow for data entry. EL records are entered ma
 | Metric | Result |
 |---|---|
 | Monthly close time | 30 minutes (from 6 days) |
-| Report types automated | 6+ across NFRA and PBOC |
+| Report types automated | 5 across NFRA and PBOC (PBOC daily / monthly / quarterly; NFRA monthly / quarterly) |
 | Data model layers | 5 unified layers |
 | Regulators served | NFRA and PBOC |
 | IT resources required | 0 |
