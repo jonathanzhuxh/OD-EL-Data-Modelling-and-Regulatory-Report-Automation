@@ -59,9 +59,9 @@ Every regulatory report is a different view of this structure. The model does no
 
 **OD source data** is downloaded daily as a structured file from the bank's internal systems. The format is consistent enough to be processed programmatically by the Alteryx daily workflow, which reads the file and writes the results into the data model.
 
-**EL source data** has no machine-readable export from the upstream system. Data is entered manually into the model — directly into the relevant layers — as EL transactions occur. This was a constraint, not a design choice. Rather than block the automation on an uncontrollable upstream dependency, the architecture treated manual EL entry as a valid input layer: entered once, in the right structure, consumed automatically by all downstream processes.
+**EL system data** comes from the bank's EL system. EL transactions are infrequent, so EL data does not need the daily standardization workflow; it is loaded directly into the relevant layers of the model as EL transactions occur, and consumed automatically by all downstream processes.
 
-The distinction matters. Manual entry is not the same as unstructured entry. EL data entered directly into the five-layer model is as usable as OD data processed automatically — the only difference is how it arrives.
+The distinction matters. OD and EL arrive differently, but once in the five-layer model, EL data is as usable as OD data — the only difference is how it arrives.
 
 ---
 
@@ -74,7 +74,7 @@ The workflow design is the core of this project. The automation came later. The 
 *Reading the diagram:*
 
 - **OD Raw Data** is the daily OD source file. It goes through the **Standardized Data Process**, which is the Alteryx daily workflow: cleaning, validation against the model, and writing to the relevant layers.
-- **EL System Data** is EL records taken from the upstream system. That system has no machine-readable export, so the records are entered manually and directly into the model layers, without going through the standardized process.
+- **EL System Data** is the EL source from the bank's EL system. It is loaded directly into the model layers, without going through the standardized process.
 - The **Join Table** joins the five layers (customer → contract → note → movement / guarantee) into one reporting view. Every report output is derived from that view.
 
 ### The daily cycle
@@ -113,7 +113,7 @@ The automation is organised into three layers:
 
 **Monthly / quarterly trigger** — Reads from the accumulated model, applies the relevant regulatory calculation logic for each report type, and generates the submission file and working paper. Runs at the start of each reporting cycle.
 
-The EL layer has no automated workflow for data entry. EL records are entered manually into the model. All downstream automation — validation, monthly trigger, report generation — treats EL data identically to OD data once it is in the model.
+EL system data is loaded directly into the model rather than through the daily OD workflow. All downstream automation — validation, monthly trigger, report generation — treats EL data identically to OD data once it is in the model.
 
 ---
 
@@ -150,11 +150,9 @@ The data volumes didn't require a database. OD and EL are not high-frequency pro
 
 The goal was not the most technically capable solution. It was the most maintainable one for the people who had to live with it.
 
-**Why accept manual EL entry rather than pushing for automation?**
+**Why does EL data bypass the daily standardization workflow?**
 
-Automating EL source data would have required IT involvement that wasn't available. The tech department was effectively paralysed by COVID at the time. Blocking the entire project on that dependency would have meant another year of six-day month-end closes.
-
-The architectural response was to treat manual entry as a valid input layer rather than a problem to be solved. EL data entered into the correct model structure is just as usable as automatically processed data. The distinction between how data arrives and how data is structured is important to keep clear.
+EL transactions are infrequent and long-duration; a daily cleaning workflow would add maintenance without adding value. Loading EL system data directly into the correct model structure makes it just as usable as the daily-processed OD data. The distinction between how data arrives and how data is structured is important to keep clear.
 
 **Why daily processing rather than weekly?**
 

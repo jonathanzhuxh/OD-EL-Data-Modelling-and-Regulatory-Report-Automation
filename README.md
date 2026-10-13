@@ -8,8 +8,7 @@ End-to-end data modelling and automation for overdraft and entrusted loan regula
 
 ## My Role
 
-<!-- TODO: 时间/职位/机构类型 -->
-I did this project entirely on my own. I diagnosed the problems in the inherited process, which had no documentation, and mapped the OD/EL data. I designed the five-layer data model, the daily and monthly/quarterly workflows and the validation rules, and built the Alteryx automation and the report outputs. I also wrote the documentation and handed the system over. No IT resources were involved.
+**2021.** I owned this project end to end, from diagnosis to delivery, entirely on my own. I diagnosed the problems in the inherited process, which had no documentation, and mapped the OD/EL data. I designed the five-layer data model, the daily and monthly/quarterly workflows and the validation rules, and built the Alteryx automation and the report outputs. I also wrote the documentation and handed the system over. No IT resources were involved.
 
 ---
 
