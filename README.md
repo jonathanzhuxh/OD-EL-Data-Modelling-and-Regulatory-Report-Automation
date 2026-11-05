@@ -30,7 +30,7 @@ Before touching any tooling, I spent the first weeks mapping the data: what it r
 
 The mapping exercise produced two things: a five-layer data model — corporate customer, loan contract, loan note, loan movement, guarantee contract — and a workflow design that moved data cleaning from month-end to every working day.
 
-OD activity happens daily. The redesigned workflow processed it daily: download the source file, run the Alteryx automation, validate against the data model, sync. By the time the monthly trigger fired, the data had already been cleaned incrementally across thirty working days. The month-end close went from six days to thirty minutes, at a cost of about five minutes of daily processing — not because the automation was clever, but because the work was already done.
+OD activity happens daily. The redesigned workflow processed it daily: download the source file, run the Alteryx automation, validate against the data model, sync. By the time the monthly trigger fired, the data had already been cleaned incrementally across every working day of the month. The month-end close went from six days to thirty minutes, at a cost of about five minutes of daily processing — not because the automation was clever, but because the work was already done.
 
 **Built with:** `Alteryx` `Excel`
 

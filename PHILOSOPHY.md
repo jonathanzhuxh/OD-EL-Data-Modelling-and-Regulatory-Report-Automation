@@ -30,7 +30,7 @@ OD generates activity every working day. The old approach batched it all to mont
 
 The daily workflow was built on that principle: every working day, download the OD source file, process it, validate it, sync it to the model. Any anomaly surfaces the same day it occurs — when the transaction is fresh, when tracing it back is easy, when there is no deadline bearing down.
 
-By the time the monthly trigger fires, there is almost nothing left to do. The data has been cleaned incrementally across thirty working days. The submission file is generated in minutes from a model that has already been validated. The checker reviews a working paper rather than hunting for errors in raw output.
+By the time the monthly trigger fires, there is almost nothing left to do. The data has been cleaned incrementally across every working day of the month. The submission file is generated in minutes from a model that has already been validated. The checker reviews a working paper rather than hunting for errors in raw output.
 
 **The lesson is not about automation. It is about when work gets done.**
 
